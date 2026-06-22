@@ -1,8 +1,11 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PageTransition from "../components/PageTransition";
 
 function About() {
   return (
+  <PageTransition>
+
     <div style={{ background: "#f8f9fa", minHeight: "100vh" }}>
       <Navbar />
 
@@ -171,6 +174,8 @@ function About() {
 
       <Footer />
     </div>
+
+  </PageTransition>
   );
 }
 

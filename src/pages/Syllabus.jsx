@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import PageTransition from "../components/PageTransition";
 
 const courses = [
   {
@@ -64,6 +65,7 @@ function Syllabus() {
   const [openFaq, setOpenFaq] = useState(null);
 
   return (
+    <PageTransition>
     <div style={{ background: "var(--off-white)", minHeight: "100vh" }}>
       <Navbar />
 
@@ -230,6 +232,7 @@ function Syllabus() {
 
       <Footer />
     </div>
+    </PageTransition>
   );
 }
 

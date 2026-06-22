@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import logoImg from "../assets/logo.png";
 import heroBg from "../assets/results-bg.png";
 
+
 function Home() {
   return (
     <div>
@@ -414,7 +415,7 @@ function Home() {
           </div>
         </div>
       </section>
-
+      
       <Footer />
     </div>
   );

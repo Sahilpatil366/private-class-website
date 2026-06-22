@@ -1223,3 +1223,67 @@ img { max-width: 100%; display: block; }
 .nav-cta:hover {
   transform: translateY(-2px);
 }
+
+/* =========================
+   LOADER
+========================= */
+
+.loader-container {
+  position: fixed;
+  inset: 0;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.loader-image {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loader-container h2 {
+  margin-top: 20px;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+
+.loader-container p {
+  margin-top: 8px;
+  color: #666;
+  font-size: 1rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+}
+
+/* Prevent layout collapse during transition */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional: If you see a white background flash, set a background color on the root */
+body {
+  background-color: #ffffff; 
+}

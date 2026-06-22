@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PageTransition from "../components/PageTransition";
 
 const STORAGE_KEY = "yash-classes-consultations";
 const inquiryOptions = [
@@ -46,32 +47,55 @@ function Contact() {
     setSuccess(false);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!formData.fullName || !formData.mobile || formData.inquiryType === inquiryOptions[0]) {
-      return;
-    }
+  const handleSubmit = async (event) => {
+      event.preventDefault();
 
-    const newEntry = {
-      "Full Name": formData.fullName,
-      "Mobile Number": formData.mobile,
-      "Email Address": formData.email,
-      "Inquiry Type": formData.inquiryType,
-      Message: formData.message,
-      Submitted: new Date().toLocaleString(),
+      if (
+        !formData.fullName ||
+        !formData.mobile ||
+        formData.inquiryType === inquiryOptions[0]
+      ) {
+        return;
+      }
+
+      try {
+        await fetch(
+          "https://script.google.com/macros/s/AKfycbyB5OzQ2zRICmndhLAQxHyLsS7NtprHuBOdQQgC6U_JFHyDUVzuBKeoMe98DRLTs2pHKA/exec",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+
+        const newEntry = {
+          "Full Name": formData.fullName,
+          "Mobile Number": formData.mobile,
+          "Email Address": formData.email,
+          "Inquiry Type": formData.inquiryType,
+          Message: formData.message,
+          Submitted: new Date().toLocaleString(),
+        };
+
+        setEntries((prev) => [newEntry, ...prev]);
+
+        setFormData({
+          fullName: "",
+          mobile: "",
+          email: "",
+          inquiryType: inquiryOptions[0],
+          message: "",
+        });
+
+        setSuccess(true);
+
+      } catch (error) {
+        console.error("Submission failed:", error);
+        alert("Failed to send inquiry.");
+      }
     };
-
-    setEntries((prev) => [newEntry, ...prev]);
-    setFormData({
-      fullName: "",
-      mobile: "",
-      email: "",
-      inquiryType: inquiryOptions[0],
-      message: "",
-    });
-    setSuccess(true);
-  };
-
   const downloadExcel = () => {
     if (!entries.length) return;
     const worksheet = XLSX.utils.json_to_sheet(entries);
@@ -81,6 +105,7 @@ function Contact() {
   };
 
   return (
+    <PageTransition>
     <div style={{ background: "var(--off-white)", minHeight: "100vh" }}>
       <Navbar />
 
@@ -337,6 +362,7 @@ function Contact() {
 
       <Footer />
     </div>
+    </PageTransition>
   );
 }
 
